@@ -1,5 +1,6 @@
 defmodule DistributedAnagramTest do
   use ExUnit.Case
+
   doctest DistributedAnagram
 
   test "the truth" do
