@@ -1,6 +1,8 @@
 defmodule Anagram.Test do
   use ExUnit.Case
 
+  doctest Anagram
+
   test "should find all anagrams of a word that are in a given dictionary" do
     dictionary = ["boy", "tar", "art"]
     anagrams = Anagram.find("rat", dictionary)
