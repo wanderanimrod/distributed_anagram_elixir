@@ -12,6 +12,7 @@ defmodule DistributedAnagram.Application do
     children = [
       # Starts a worker by calling: GenCalculator.start_link(arg1, arg2, arg3)
       worker(GenCalculator, []),
+      worker(Dictionary, []),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html

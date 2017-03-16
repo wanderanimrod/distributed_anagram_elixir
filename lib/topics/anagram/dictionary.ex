@@ -4,13 +4,31 @@ defmodule Dictionary do
   @dictionary_path "/Users/nwandera/three_letter_words"
 
   def start_link do
-    state = %{anagrams_map: load_dict()}
+    state = load_dict()
     GenServer.start_link(__MODULE__, state, name: __MODULE__)
+  end
+
+  def find_anagrams(word) do
+    GenServer.call(__MODULE__, {:find_anagrams, word})
+  end
+
+  def handle_call({:find_anagrams, word}, _from, anagrams_map) do
+    normalised_word = normalise_word(word)
+    anagrams_of_word = Map.get(anagrams_map, normalised_word, [])
+    {:reply, anagrams_of_word, anagrams_map}
+  end
+
+  defp normalise_word(word) do
+    word
+    |> String.strip
+    |> String.downcase
+    |> String.graphemes
+    |> Enum.sort
+    |> Enum.join
   end
 
   defp load_dict() do
     File.stream!(@dictionary_path)
-    |> Stream.map(&normalise_word/1)
     |> Enum.reduce(%{}, &build_anagrams_map/2)
   end
 
@@ -20,12 +38,4 @@ defmodule Dictionary do
     Map.put(anagrams_map, normalised_word, already_existing_words ++ [word])
   end
 
-  def normalise_word(word) do
-    word
-    |> String.strip
-    |> String.downcase
-    |> String.graphemes
-    |> Enum.sort
-    |> Enum.join
-  end
 end
