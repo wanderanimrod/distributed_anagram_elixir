@@ -10,8 +10,8 @@ defmodule DistributedAnagram.Application do
 
     # Define workers and child supervisors to be supervised
     children = [
-      # Starts a worker by calling: DistributedAnagram.Worker.start_link(arg1, arg2, arg3)
-      # worker(DistributedAnagram.Worker, [arg1, arg2, arg3]),
+      # Starts a worker by calling: GenCalculator.start_link(arg1, arg2, arg3)
+      worker(GenCalculator, []),
     ]
 
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
