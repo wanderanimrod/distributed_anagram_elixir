@@ -1,7 +1,7 @@
 defmodule GenCalculator do
   use GenServer
 
-  def start_link(start_at) do
+  def start_link(start_at \\ 0) do
     GenServer.start_link(__MODULE__, %{count: start_at})
   end
 
@@ -11,10 +11,8 @@ defmodule GenCalculator do
     {:noreply, %{count: next}}
   end
 
-  def handle_info(:previous, %{count: count} = state) do
-    next = count - 1
-    IO.puts "current = #{next}"
-    {:noreply, %{state | count: next}}
+  def handle_info({:divide, numerator, denominator}, state = %{count: count}) do
+    IO.puts "(#{numerator}/#{denominator}) + #{count} = #{count + numerator/denominator}"
+    {:noreply, state}
   end
-  
 end
