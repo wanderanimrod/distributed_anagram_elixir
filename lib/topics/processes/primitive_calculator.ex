@@ -1,5 +1,5 @@
 defmodule PrimitiveCalculator do
-  def counter(current \\ 0) do
+  def count(current \\ 0) do
     IO.puts("current = #{current}")
     receive do
       :next -> count(current + 1)
