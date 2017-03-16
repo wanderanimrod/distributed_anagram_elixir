@@ -5,14 +5,16 @@ defmodule GenCalculator do
     GenServer.start_link(__MODULE__, %{count: start_at})
   end
 
-  def handle_call(:next, _from, %{count: count} = state) do
+  def handle_info(:next, _state = %{count: count}) do
     next = count + 1
-    {:reply, next, %{state | count: next}}
+    IO.puts "current = #{next}"
+    {:noreply, %{count: next}}
   end
 
-  def handle_call(:previous, _from, %{count: count} = state) do
+  def handle_info(:previous, %{count: count} = state) do
     next = count - 1
-    {:reply, next, %{state | count: next}}
+    IO.puts "current = #{next}"
+    {:noreply, %{state | count: next}}
   end
   
 end
